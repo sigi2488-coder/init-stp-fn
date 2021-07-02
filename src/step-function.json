@@ -1,0 +1,81 @@
+{
+    "Comment": "Registro del incidente",
+    "StartAt": "Step - RegisterIncident",
+    "States": {
+      "Step - RegisterIncident": {
+        "Comment": "RegisterIncident",
+        "Type": "Pass",
+        "Next": "Step - Is plagiarism"
+      },
+      "Step - Is plagiarism": {
+        "Comment": "Determina si el incidente es un plagio",
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.IsPlagiarism",
+            "BooleanEquals": true,
+            "Next": "Step - ScheduleExam  SendNotification"
+          }
+        ],
+        "Default": "Pass - ResolveIncident"
+      },
+      "Step - ScheduleExam  SendNotification": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
+        "TimeoutSeconds": 3600,
+        "Parameters": {
+          "FunctionName": "arn:aws:lambda:us-east-2:286802922257:function:step-function-sigi-lambda:$LATEST",
+          "Payload": {
+            "student.$": "$",
+            "taskToken.$": "$$.Task"
+          }
+        },
+        "ResultSelector": {
+          "qualification.$": "$.note"
+        },
+        "ResultPath": "$.exam",
+        "Next": "Step - HasStudentPassedExam",
+        "Retry": [
+          {
+            "ErrorEquals": [
+              "States.ALL"
+            ],
+            "IntervalSeconds": 5,
+            "BackoffRate": 2,
+            "MaxAttempts": 1
+          }
+        ],
+        "Catch": [
+          {
+            "ErrorEquals": [
+              "States.ALL"
+            ],
+            "Next": "Step - Fail"
+          }
+        ]
+      },
+      "Step - HasStudentPassedExam": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.exam.qualification",
+            "NumericGreaterThanEquals": 3,
+            "Next": "Pass - ResolveIncident"
+          }
+        ],
+        "Default": "Step - TakeAdministrativeAction"
+      },
+      "Pass - ResolveIncident": {
+        "Type": "Pass",
+        "End": true
+      },
+      "Step - TakeAdministrativeAction": {
+        "Type": "Pass",
+        "End": true
+      },
+      "Step - Fail": {
+        "Type": "Fail",
+        "Cause": "Error TakeAdministrativeAction "
+      }
+    }
+  }
