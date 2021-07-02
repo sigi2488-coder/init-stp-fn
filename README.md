@@ -29,27 +29,27 @@ Aprendiendo Step Functions
   ### step to lambda
   
     > {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "",
-            "Effect": "Allow",
-            "Action": "lambda:InvokeFunction",
-            "Resource": "arn:aws:lambda:us-east-2:·········:function:step-function-···-lambda:$LATEST"
-        }
-    ]
-}
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "",
+                  "Effect": "Allow",
+                  "Action": "lambda:InvokeFunction",
+                  "Resource": "arn:aws:lambda:us-east-2:·········:function:step-function-···-lambda:$LATEST"
+              }
+          ]
+      }
   
   ### api to step 
   
     > {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "states:*",
-            "Resource": "arn:aws:lambda:us-east-2:**********:function:step-function-******-lambda:$LATEST"
-        }
-    ]
-}
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Action": "states:*",
+                  "Resource": "arn:aws:lambda:us-east-2:**********:function:step-function-******-lambda:$LATEST"
+              }
+          ]
+      }
   
