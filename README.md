@@ -15,6 +15,9 @@ Aprendiendo Step Functions
   - > 4. El proceso espera a que el estudiante complete el examen, luego
   - > 5. Determinar si el estudiante ha superado el examen o no (note >= 3)
 
+![image](https://user-images.githubusercontent.com/5661155/124319280-9a1dd100-db3f-11eb-80fe-22a64f11db01.png)
+
+
 
 ## Step Function .json [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference)
 
@@ -45,7 +48,7 @@ Aprendiendo Step Functions
         {
             "Effect": "Allow",
             "Action": "states:*",
-            "Resource": "*"
+            "Resource": "arn:aws:lambda:us-east-2:**********:function:step-function-******-lambda:$LATEST"
         }
     ]
 }
