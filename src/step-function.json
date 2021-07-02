@@ -24,7 +24,7 @@
         "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
         "TimeoutSeconds": 3600,
         "Parameters": {
-          "FunctionName": "arn:aws:lambda:us-east-2:286802922257:function:step-function-sigi-lambda:$LATEST",
+          "FunctionName": "arn:aws:lambda:us-east-2:**********:function:step-function-******-lambda:$LATEST",
           "Payload": {
             "student.$": "$",
             "taskToken.$": "$$.Task"
